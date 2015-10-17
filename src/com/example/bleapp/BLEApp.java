@@ -63,11 +63,6 @@ public class BLEApp extends Activity {
     UUID PROXServiceUUID = UUID.fromString("00001802-0000-1000-8000-00805f9b34fb");
 	UUID PROXCharacUUID = UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb");
 	
-	//To Increase or Decrease
-	UUID PROXWRITEServiceUUID = UUID.fromString("00001804-0000-1000-8000-00805f9b34fb");
-	UUID PROXWRITECharacUUID = UUID.fromString("00002a07-0000-1000-8000-00805f9b34fb");
-	UUID PROXWRITEDescUUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
-	
 	//To read the current level
 	UUID KEYServiceUUID = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
 	UUID KEYCharacUUID = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb");
@@ -137,10 +132,10 @@ public class BLEApp extends Activity {
 		    	
 		    	pd.show();
 		    	
-				byte[] data = {(byte)0x01}; //Increase key press
+				byte[] data = {(byte)0x02}; //Increase key press
 				
 				try {
-					BluetoothGattDescriptor myDesc =  bluetoothGatt.getService(PROXWRITEServiceUUID).getCharacteristic(PROXWRITECharacUUID).getDescriptor(PROXWRITEDescUUID);
+					BluetoothGattDescriptor myDesc =  bluetoothGatt.getService(KEYServiceUUID).getCharacteristic(KEYCharacUUID).getDescriptor(KEYDescriptorUUID);
 					myDesc.setValue(data);
 					bluetoothGatt.writeDescriptor(myDesc);
 				}
@@ -164,10 +159,10 @@ public class BLEApp extends Activity {
 		    	
 		    	pd.show();
 		    	
-				byte[] data = {(byte)0x02}; //Decrease key press
+				byte[] data = {(byte)0x03}; //Decrease key press
 				
 				try {
-					BluetoothGattDescriptor myDesc =  bluetoothGatt.getService(PROXWRITEServiceUUID).getCharacteristic(PROXWRITECharacUUID).getDescriptor(PROXWRITEDescUUID);
+					BluetoothGattDescriptor myDesc =  bluetoothGatt.getService(KEYServiceUUID).getCharacteristic(KEYCharacUUID).getDescriptor(KEYDescriptorUUID);
 					myDesc.setValue(data);
 					bluetoothGatt.writeDescriptor(myDesc);
 				}
@@ -332,14 +327,27 @@ public class BLEApp extends Activity {
     	TextView stateView = (TextView)findViewById(R.id.connStatus);
     	Button upButton  = (Button)findViewById(R.id.button5);
     	Button downButton  = (Button)findViewById(R.id.button4);
+    	
+    	Button connectButton  = (Button)findViewById(R.id.button1);
+    	Button disconnectButton  = (Button)findViewById(R.id.button2);
+    	Button buzzButton  = (Button)findViewById(R.id.button3);
     	if(state) {
     		upButton.setEnabled(true);
     		downButton.setEnabled(true);
+    		disconnectButton.setEnabled(true);
+    		buzzButton.setEnabled(true);
+    		
+    		connectButton.setEnabled(false);
+    		
     		stateView.setText("Status:CONNECTED");
     	}
     	else {
     		upButton.setEnabled(false);
     		downButton.setEnabled(false);
+    		disconnectButton.setEnabled(false);
+    		buzzButton.setEnabled(false);
+    		
+    		connectButton.setEnabled(true);
     		stateView.setText("Status:DISCONNECTED");
     	}
     }

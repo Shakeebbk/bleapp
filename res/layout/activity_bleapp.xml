@@ -131,7 +131,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
-	        android:text="Console"/>
+	        android:text="Console BLEApp_V1.0"/>
 	</RelativeLayout>
 	<RelativeLayout
 	    android:layout_width="fill_parent"
